@@ -26,7 +26,11 @@ router.register('itemimage', views.ItemImageViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('', views.categories_list, name='categories_list'),
+    path('<int:id>/', views.products_list, name='products_list'),
+    path('products/<int:id>/', views.product_description, name='product_description')
 ]
+
 
 
 
