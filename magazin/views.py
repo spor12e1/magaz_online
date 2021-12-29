@@ -1,20 +1,32 @@
-from rest_framework import viewsets
-
-from .serializers import ProductSerializer, CategorySerializer, ItemImageSerializer
-from magazin.models import Product, Category, ItemImage
+from django.shortcuts import render
 
 
-class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+from .models import Category, Product, ItemImage
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+def categories_list(request):
+    categories = Category.objects.all()
+    ctx = {
+        'categories': categories,
+    }
+    return render(request, 'categories_list.html', ctx)
 
 
-class ItemImageViewSet(viewsets.ModelViewSet):
-    queryset = ItemImage.objects.all()
-    serializer_class = ItemImageSerializer
+def products_list(request, id):
+    products = Product.objects.filter(categories=id)
+    category = Category.objects.get(id=id)
+    ctx = {
+        'category': category,
+        'products': products,
+    }
+    return render(request, 'products_list.html', ctx)
 
+
+def product_description(request, id):
+    product = Product.objects.get(id=id)
+    images = ItemImage.objects.filter(product=id)
+    ctx = {
+        'product': product,
+        'images': images,
+    }
+    return render(request, 'product_description.html', ctx)
