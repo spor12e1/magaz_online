@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
 from .serializers import ProductSerializer, CategorySerializer, ItemImageSerializer
-from categories.models import Product, Category, ItemImage
+from magazin.models import Product, Category, ItemImage
 
 
 class ProductViewSet(viewsets.ModelViewSet):
